@@ -1,0 +1,14 @@
+<h1>Lista de Firebase</h1>
+<h2>Nueva Venta:</h2>
+<div>
+  <input type="number" #totalNumber>
+  <button (click)="addTotals(+totalNumber.value); totalNumber.value = ''">Enviar</button>
+</div>
+
+<ul>
+  @for (total of totals$ | async; track total.id) {
+    <li>
+      {{total.total}}
+    </li>
+  }
+</ul>
