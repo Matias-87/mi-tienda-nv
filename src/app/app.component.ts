@@ -4,36 +4,41 @@ import { addDoc, collection, collectionData, Firestore } from '@angular/fire/fir
 import { RouterOutlet } from '@angular/router';
 import { Interface } from 'readline';
 import { Observable } from 'rxjs';
+import { DatabaseService } from './data-access/database.service';
+import { SalesSummary } from './interfaces/database.interface';
+import { SalesListComponent } from "./sales-list/sales-list.component";
+import { SalesBtnComponent } from "./sales-btn/sales-btn.component";
 
 const PATH = 'totals';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [AsyncPipe],
+  imports: [SalesListComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent  {
-  private firestore: Firestore = inject(Firestore);
-  private totalsCollection = collection(this.firestore, PATH);
-
-  getTotals() {
-    return collectionData(this.totalsCollection) as Observable<Totals[]>;
+export class AppComponent implements OnInit{
+  title(title: any) {
+    throw new Error('Method not implemented.');
   }
+  private _databaseService = inject(DatabaseService);
 
-  totals$ = this.getTotals();
+  totals$ = this._databaseService.getTotals();
+  salesSummary$: any;
+
+  async ngOnInit(): Promise<void> {
+    this.salesSummary$ = await this._databaseService.getSalesSummary();
+  }
 
   async addTotals(value: number) {
     try {
-      await addDoc(this.totalsCollection, {total: value});
+      await this._databaseService.addTotal(value);
+      this.salesSummary$ = await this._databaseService.getSalesSummary();
     } catch (error) {
       console.error(error);
     }
+    console.log(this.salesSummary$);
+    // this.salesSummary$ = this._databaseService.getSalesSummary();
   }
-}
-
-export interface Totals {
-  total: number;
-  id: string;
 }

@@ -1,0 +1,88 @@
+@use '../../partials/variables' as v;
+
+.sales-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 30px;
+    height: 80px;
+    width: 80px;
+    font-size: 35px;
+    border-radius: 50%;
+    background-color: v.$primary-color;
+    color: v.$text-color;
+    border: 2px solid v.$text-color;
+}
+
+.modal {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: #5558;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &__card {
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        height: 50%;
+        width: 80%;
+        background-color: v.$primary-color;
+        border-radius: 20px;
+        overflow: hidden;
+        border: 2px solid #fff;
+
+        &-text {
+            color: v.$text-color;
+            width: 100%;
+            text-align: center;
+            border-bottom: 2px solid v.$secondary-color-hover;
+        }
+
+        &-total {
+            height: 60%;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            .total {
+                color: v.$text-color;
+                margin: 15px;
+            }
+
+            input {
+                outline: none;
+                border: none;
+                color: v.$text-color;
+                font-size: 2rem;
+                width: 50%;
+                background-color: v.$secondary-color-hover;
+            }
+        }
+
+        &-btns {
+            width: 100%;
+            height: 20%;
+            display: flex;
+
+            button {
+                flex-grow: 1;
+                background-color: v.$primary-color;
+                color: v.$text-color;
+                font-size: 25px;
+                border: none;
+                transition: background .5s ease;
+                
+                &:hover {
+                    background-color: v.$secondary-color-hover;
+                }
+            }
+        }
+    }
+}
+
+.modal-hidden {
+    visibility: hidden;
+}

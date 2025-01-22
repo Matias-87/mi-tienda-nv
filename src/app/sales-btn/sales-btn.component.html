@@ -1,0 +1,18 @@
+<div [ngClass]="modalChange">
+    <div class="modal__card">
+        <h1 class="modal__card-text">Nueva Venta</h1>
+        <div class="modal__card-total">
+            <h2 class="total" #total>Total:</h2>
+            <input type="number" [(ngModel)]="totalPrice" #newNum>
+        </div>
+
+        <div class="modal__card-btns">
+            <button class="cancel" (click)="changeClass()">Cancelar</button>
+            <button class="accept" (click)="numValue(newNum.value)">Aceptar</button>
+        </div>
+    </div>
+</div>
+
+<button [ngClass]="salesBtn" class="sales-btn" (click)="changeClass()">
+    <i class="bi bi-plus-lg"></i>
+</button>

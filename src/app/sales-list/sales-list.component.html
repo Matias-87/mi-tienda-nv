@@ -1,0 +1,30 @@
+<app-sales-btn></app-sales-btn>
+<div class="principal-container pt-4">
+    <table class="sales-list" [cellPadding]="0" [cellSpacing]="0">
+        <thead class="sales-list__head">
+            <tr>
+                <th scope="col">Hora de la Venta</th>
+                <th scope="col">Precio</th>
+            </tr>
+        </thead>
+        <tbody class="sales-list__body">
+            @for (products of totals$ | async; track $index) {
+            <tr>
+                <th scope="row" class="sales-list__time">
+                    <li>{{products.timestamp}}</li>
+                    <button>
+                        <i class="bi bi-x"></i>
+                    </button>
+                </th>
+                <td class="sales-list__price">{{products.total}}</td>
+            </tr>
+            }
+        </tbody>
+        <tfoot class="sales-list__foot">
+            <tr class="sales-list__total">
+                <th scope="row">Total: ${{salesSummary$?.total}}</th>
+            </tr>
+        </tfoot>
+    </table>
+    
+</div>
