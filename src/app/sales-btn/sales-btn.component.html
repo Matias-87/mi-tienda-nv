@@ -8,11 +8,20 @@
 
         <div class="modal__card-btns">
             <button class="cancel" (click)="changeClass()">Cancelar</button>
-            <button class="accept" (click)="numValue(newNum.value)">Aceptar</button>
+            <button class="accept" (click)="addTotals(+newNum.value)">Aceptar</button>
         </div>
     </div>
 </div>
 
-<button [ngClass]="salesBtn" class="sales-btn" (click)="changeClass()">
-    <i class="bi bi-plus-lg"></i>
-</button>
+<div class="fixed-btns">
+    <!-- Crear un modar de advertencia para que el usuario no elimine los 
+    datos por accidente -->
+    <button class="end-btn" (click)="endDay()">
+        <i class="bi bi-calendar-check"></i>
+        <p>Terminar el Dia</p>
+    </button>
+
+    <button [ngClass]="salesBtn" class="sales-btn" (click)="changeClass()">
+        <i class="bi bi-plus-lg"></i>
+    </button>
+</div>

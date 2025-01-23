@@ -1,6 +1,7 @@
 import { NgClass } from '@angular/common';
-import { Component, EventEmitter, Output } from '@angular/core';
-import { FormsModule, NgModel } from '@angular/forms';
+import { Component, EventEmitter, inject, Output } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { DatabaseService } from '../data-access/database.service';
 
 @Component({
   selector: 'app-sales-btn',
@@ -10,11 +11,26 @@ import { FormsModule, NgModel } from '@angular/forms';
   styleUrl: './sales-btn.component.scss'
 })
 export class SalesBtnComponent {
+  private _databaseService = inject(DatabaseService);
 
   modalChange: string = 'modal-hidden';
   salesBtn: string = 'sales-btn';
   totalPrice: string = '';
   modalClass: boolean = false;
+
+  async addTotals(value: number) {
+    try {
+      this.changeClass();
+      await this._databaseService.addTotal(value);
+    } catch (error) {
+      console.error(error);
+      this.changeClass();
+    }
+  }
+
+  async endDay() {
+    await this._databaseService.deleteCollection('ventas')
+  }
 
   changeClass(): void {
     if (this.modalClass) {
@@ -26,15 +42,6 @@ export class SalesBtnComponent {
       this.salesBtn = 'modal-hidden';
       this.totalPrice = '';
       this.modalClass = true;
-    }
-  }
-
-  @Output() addNum = new EventEmitter<string>();
-
-  numValue(value: string) {
-    if (value !== '') {
-      this.addNum.emit(value);
-      this.changeClass();
     }
   }
 }

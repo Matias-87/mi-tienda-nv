@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
-import { addDoc, collection, collectionData, doc, Firestore, getDoc, orderBy, query, setDoc } from '@angular/fire/firestore';
+import { addDoc, collection, collectionData, deleteDoc, doc, docData, Firestore, getDoc, getDocs, limit, onSnapshot, orderBy, query, setDoc, updateDoc, writeBatch } from '@angular/fire/firestore';
 import { SalesSummary, Totals } from '../interfaces/database.interface';
-import { from, Observable } from 'rxjs';
+import { from, merge, Observable } from 'rxjs';
 
 const totalsPATH = 'ventas'
 const summaryPATH = 'resumen'
@@ -22,43 +22,83 @@ export class DatabaseService {
     return collectionData(totalsQuery) as Observable<any[]>;
   }
 
-  async getSalesSummary() {
-    const longDate = new Date().toLocaleTimeString();
+  getSalesSummary() {
     const docRef = doc(this.firestore, 'resumen', shortDate);
-    // return from(getDoc(docRef).then(docSnap => docSnap.exists() ? (docSnap.data() as SalesSummary) : null))
-    const docSnap = await getDoc(docRef);
-
-    if(docSnap.exists()) {
-      console.log(docSnap.data(), shortDate, longDate);
-      return docSnap.data() as SalesSummary;
-    } else {
-      console.log('The Document does not exist');
-      return;
-    }
+    return docData(docRef, { idField: 'id' }) as Observable<SalesSummary | null>;
   }
 
   async addTotal(value: number) {
-    const longDate = new Date().toLocaleTimeString();
-    const venta = {
-      total: value,
-      timestamp: longDate
+    try {
+      const longDate = new Date().toLocaleTimeString();
+      const venta = {
+        total: value,
+        timestamp: longDate,
+        id: ''
+      }
+
+      const docRef = await addDoc(this.totalsCollection, venta);
+
+      await updateDoc(docRef, {id: docRef.id});
+    } catch (error) {
+      console.error('Error adding document: ', error);
     }
 
-    addDoc(this.totalsCollection, venta);
-
-    await this.addSummary(value);
+    this.addSummary(value);
   }
 
   async addSummary(value: number) {
     const summaryRef = doc(this.firestore, 'resumen', shortDate.split('T')[0]);
-    const summary = await this.getSalesSummary();
 
-    const currentTotal = summary?.total || 0;
-    const currentConteo = summary?.conteo || 0;
+    const docSnap = await getDoc(summaryRef);
+    const salesSummary = docSnap.exists() ? docSnap.data() : {};
+
+    const currentTotal = salesSummary?.['total'] || 0;
+    const currentConteo = salesSummary?.['conteo'] || 0;
 
     const newTotal = currentTotal + value;
     const newConteo = currentConteo + 1;
 
     setDoc(summaryRef, { total: newTotal, conteo: newConteo }, { merge: true })
+  }
+
+  async removeSummary(value: number) {
+    const summaryRef = doc(this.firestore, 'resumen', shortDate.split('T')[0]);
+
+    const docSnap = await getDoc(summaryRef);
+    const salesSummary = docSnap.exists() ? docSnap.data() : {};
+
+    const currentTotal = salesSummary?.['total'] || 0;
+    const currentConteo = salesSummary?.['conteo'] || 0;
+
+    const newTotal = currentTotal - value;
+    const newConteo = currentConteo - 1;
+
+    setDoc(summaryRef, { total: newTotal, conteo: newConteo }, { merge: true })
+  }
+
+  async deleteTotal(id: string, total: number) {
+    await deleteDoc(doc(this.firestore, 'ventas', id));
+    await this.removeSummary(total);
+  }
+
+  async deleteCollection(collectionName: string) {
+    const collectionRef = collection(this.firestore, collectionName);
+    const batchSize = 500;
+
+    while(true) {
+      const querySnapshot = await getDocs(query(collectionRef, limit(batchSize)));
+
+      if(querySnapshot.empty) {
+        break;
+      }
+
+      const batch = writeBatch(this.firestore);
+
+      querySnapshot.docs.forEach(doc => {
+        batch.delete(doc.ref);
+      });
+
+      await batch.commit();
+    }
   }
 }

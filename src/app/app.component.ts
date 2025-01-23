@@ -18,27 +18,27 @@ const PATH = 'totals';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent implements OnInit{
+export class AppComponent {
   title(title: any) {
     throw new Error('Method not implemented.');
   }
-  private _databaseService = inject(DatabaseService);
+  // private _databaseService = inject(DatabaseService);
 
-  totals$ = this._databaseService.getTotals();
-  salesSummary$: any;
+  // totals$ = this._databaseService.getTotals();
+  // salesSummary$: any;
 
-  async ngOnInit(): Promise<void> {
-    this.salesSummary$ = await this._databaseService.getSalesSummary();
-  }
+  // async ngOnInit(): Promise<void> {
+  //   this.salesSummary$ = await this._databaseService.getSalesSummary();
+  // }
 
-  async addTotals(value: number) {
-    try {
-      await this._databaseService.addTotal(value);
-      this.salesSummary$ = await this._databaseService.getSalesSummary();
-    } catch (error) {
-      console.error(error);
-    }
-    console.log(this.salesSummary$);
-    // this.salesSummary$ = this._databaseService.getSalesSummary();
-  }
+  // async addTotals(value: number) {
+  //   try {
+  //     await this._databaseService.addTotal(value);
+  //     this.salesSummary$ = await this._databaseService.getSalesSummary();
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  //   console.log(this.salesSummary$);
+  //   // this.salesSummary$ = this._databaseService.getSalesSummary();
+  // }
 }
