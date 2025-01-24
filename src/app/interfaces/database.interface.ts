@@ -5,5 +5,6 @@ export interface Totals {
 
 export interface SalesSummary {
     conteo: number,
-    total: number
+    total: number,
+    month: string
 }

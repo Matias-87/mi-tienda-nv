@@ -2,7 +2,7 @@
 
 .fixed-btns {
     position: fixed;
-    bottom: 0;
+    bottom: 10vh;
     right: 0;
     height: 120px;
     padding: 10px;
@@ -36,7 +36,9 @@
     color: v.$text-color;
     background-color: v.$red-color;
     overflow: hidden;
-    transition: all 1.5s ease;
+    transition: 
+        width 1.5s,
+        border-radius .5s ease;
     // text-wrap: nowarp;
 
     i {
@@ -82,7 +84,7 @@
             color: v.$text-color;
             width: 100%;
             text-align: center;
-            margin: 5px;
+            margin: 5px 0px;
             padding: 5px;
             border-bottom: 2px solid v.$secondary-color-hover;
         }
@@ -130,6 +132,35 @@
 
                 &:hover {
                     background-color: v.$secondary-color-hover;
+                }
+            }
+        }
+    }
+
+    &__end-day {
+        border: 2px solid v.$red-color;
+
+        .modal {
+            &__card-total {
+                p {
+                    margin: 20px;
+                    font-size: 20px;
+                    text-align: center;
+                }
+            }
+
+            &__card-btns {
+                button {
+                    &:last-child {
+                        border-bottom-right-radius: 20px;
+                        border: 3px solid v.$red-color;
+                        background-color: v.$red-color;
+                        transition: background-color .5s ease;
+
+                        &:hover {
+                            background-color: v.$primary-color;
+                        }
+                    }
                 }
             }
         }

@@ -1,0 +1,39 @@
+<div class="principal-container pt-4">
+    <div class="filters">
+        <select name="month" id="month" class="filters__filter h1">
+            <option selected>Seleccione un Mes</option>
+            @for(month of monthsArr; track $index) {
+            <option value="$index">{{month}}</option>
+            }
+        </select>
+        <select name="year" id="year" class="filters__filter h1">
+            <option selected>Seleccione un Año</option>
+            <option value="1">2025</option>
+        </select>
+    </div>
+    <table class="sales-list" [cellPadding]="0" [cellSpacing]="0">
+        <thead class="sales-list__head">
+            <tr>
+                <th scope="col">Dias</th>
+                <th scope="col">Ventas</th>
+                <th scope="col">Total</th>
+            </tr>
+        </thead>
+        <tbody class="sales-list__body">
+            @for (sales of result; track $index) {
+                <tr>
+                    <th scope="row" class="sales-list__time">
+                        <li>{{sales?.date}}</li>
+                    </th>
+                    <td class="sales-list__sales">{{sales?.conteo}}</td>
+                    <td class="sales-list__price">{{sales?.total}}</td>
+                </tr>
+            }
+        </tbody>
+        <tfoot class="sales-list__foot">
+            <tr class="sales-list__total">
+                <th scope="row">Total del Mes: 200000000</th>
+            </tr>
+        </tfoot>
+    </table>
+</div>

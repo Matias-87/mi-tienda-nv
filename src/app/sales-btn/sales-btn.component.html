@@ -13,10 +13,28 @@
     </div>
 </div>
 
+<div [ngClass]="modalChangeEndDay">
+    <div class="modal__card modal__end-day">
+        <h1 class="modal__card-text">Terminar el Dia</h1>
+        <div class="modal__card-total">
+            <p>
+                Presionar "Aceptar" finalizara el dia y por lo tanto
+                los datos individuales de las ventas seran eliminados y
+                el total sera guardado dentro de los datos del dia.
+            </p>
+        </div>
+
+        <div class="modal__card-btns">
+            <button class="cancel" (click)="changeClassEndDay()">Cancelar</button>
+            <button class="accept" (click)="endDay()">Aceptar</button>
+        </div>
+    </div>
+</div>
+
 <div class="fixed-btns">
     <!-- Crear un modar de advertencia para que el usuario no elimine los 
     datos por accidente -->
-    <button class="end-btn" (click)="endDay()">
+    <button [ngClass]="endBtn" (click)="changeClassEndDay()">
         <i class="bi bi-calendar-check"></i>
         <p>Terminar el Dia</p>
     </button>

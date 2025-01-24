@@ -1,20 +1,21 @@
 import { AsyncPipe } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { addDoc, collection, collectionData, Firestore } from '@angular/fire/firestore';
-import { RouterOutlet } from '@angular/router';
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { Interface } from 'readline';
 import { Observable } from 'rxjs';
 import { DatabaseService } from './data-access/database.service';
 import { SalesSummary } from './interfaces/database.interface';
 import { SalesListComponent } from "./sales-list/sales-list.component";
 import { SalesBtnComponent } from "./sales-btn/sales-btn.component";
+import { NavBarComponent } from './nav-bar/nav-bar.component';
 
 const PATH = 'totals';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [SalesListComponent],
+  imports: [NavBarComponent, RouterOutlet],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

@@ -14,7 +14,9 @@ export class SalesBtnComponent {
   private _databaseService = inject(DatabaseService);
 
   modalChange: string = 'modal-hidden';
+  modalChangeEndDay: string = 'modal-hidden';
   salesBtn: string = 'sales-btn';
+  endBtn: string = 'end-btn'
   totalPrice: string = '';
   modalClass: boolean = false;
 
@@ -29,18 +31,27 @@ export class SalesBtnComponent {
   }
 
   async endDay() {
-    await this._databaseService.deleteCollection('ventas')
+    await this._databaseService.deleteCollection('ventas');
+    this.changeClassEndDay();
   }
 
   changeClass(): void {
     if (this.modalClass) {
       this.modalChange = 'modal-hidden';
-      this.salesBtn = 'sales-btn'
       this.modalClass = false;
     } else {
       this.modalChange = 'modal';
-      this.salesBtn = 'modal-hidden';
       this.totalPrice = '';
+      this.modalClass = true;
+    }
+  }
+
+  changeClassEndDay(): void {
+    if(this.modalClass) {
+      this.modalChangeEndDay = 'modal-hidden';
+      this.modalClass = false;
+    } else {
+      this.modalChangeEndDay = 'modal';
       this.modalClass = true;
     }
   }

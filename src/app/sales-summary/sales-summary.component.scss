@@ -11,6 +11,30 @@
     padding-bottom: 30px;
 }
 
+.filters {
+    width: 90%;
+    height: 8vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    background-color: v.$primary-color;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 20px;
+
+    &__filter {
+        padding: 5px;
+        margin: 0px;
+        width: 40%;
+        background-color: v.$secondary-color;
+        color: v.$text-color;
+        font-size: 15px;
+        border-radius: 20px;
+        border-color: v.$text-color;
+        text-align: center;
+    }
+}
+
 .sales-list {
     width: 90%;
     background-color: v.$primary-color;
@@ -28,6 +52,7 @@
 
     &__total {
         font-size: 35px;
+        padding: 10px;
         background-color: v.$secondary-color;
     }
 
@@ -69,5 +94,14 @@
         font-size: 20px;
         font-weight: 500;
         border-bottom: 2px solid v.$primary-color;
+    }
+
+    &__sales {
+        background: v.$secondary-color;
+        padding: 15px;
+        font-size: 20px;
+        font-weight: 500;
+        border-bottom: 2px solid v.$primary-color;
+        border-right: 2px solid v.$primary-color;
     }
 }

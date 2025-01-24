@@ -1,11 +1,12 @@
 import { inject, Injectable } from '@angular/core';
-import { addDoc, collection, collectionData, deleteDoc, doc, docData, Firestore, getDoc, getDocs, limit, onSnapshot, orderBy, query, setDoc, updateDoc, writeBatch } from '@angular/fire/firestore';
+import { addDoc, collection, collectionData, deleteDoc, doc, docData, Firestore, getDoc, getDocs, limit, onSnapshot, orderBy, query, setDoc, updateDoc, where, writeBatch } from '@angular/fire/firestore';
 import { SalesSummary, Totals } from '../interfaces/database.interface';
 import { from, merge, Observable } from 'rxjs';
 
 const totalsPATH = 'ventas'
 const summaryPATH = 'resumen'
 const shortDate = new Date().toLocaleDateString().split('/').join('-');
+const date = new Date().toLocaleDateString()
 
 @Injectable({
   providedIn: 'root'
@@ -25,6 +26,19 @@ export class DatabaseService {
   getSalesSummary() {
     const docRef = doc(this.firestore, 'resumen', shortDate);
     return docData(docRef, { idField: 'id' }) as Observable<SalesSummary | null>;
+  }
+
+  async getTotalsFilter(month: string) {
+    const daysQuery = query(collection(this.firestore, 'resumen'), where('month', '==', month));
+    console.log(month)
+    const querySnapshot = await getDocs(daysQuery);
+
+    const results: any[] = [];
+    querySnapshot.forEach((doc) => {
+      results.push(doc.data())
+    })
+
+    return results;
   }
 
   async addTotal(value: number) {
@@ -47,7 +61,8 @@ export class DatabaseService {
   }
 
   async addSummary(value: number) {
-    const summaryRef = doc(this.firestore, 'resumen', shortDate.split('T')[0]);
+    const summaryRef = doc(this.firestore, 'resumen', shortDate);
+    const month = shortDate.split('-')[1]; 
 
     const docSnap = await getDoc(summaryRef);
     const salesSummary = docSnap.exists() ? docSnap.data() : {};
@@ -58,11 +73,11 @@ export class DatabaseService {
     const newTotal = currentTotal + value;
     const newConteo = currentConteo + 1;
 
-    setDoc(summaryRef, { total: newTotal, conteo: newConteo }, { merge: true })
+    setDoc(summaryRef, { total: newTotal, conteo: newConteo, month:  month, date: date}, { merge: true })
   }
 
   async removeSummary(value: number) {
-    const summaryRef = doc(this.firestore, 'resumen', shortDate.split('T')[0]);
+    const summaryRef = doc(this.firestore, 'resumen', shortDate);
 
     const docSnap = await getDoc(summaryRef);
     const salesSummary = docSnap.exists() ? docSnap.data() : {};
