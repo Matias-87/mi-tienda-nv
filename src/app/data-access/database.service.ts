@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
-import { addDoc, collection, collectionData, deleteDoc, doc, docData, Firestore, getDoc, getDocs, limit, onSnapshot, orderBy, query, setDoc, updateDoc, where, writeBatch } from '@angular/fire/firestore';
+import { addDoc, arrayUnion, collection, collectionData, deleteDoc, doc, docData, Firestore, getDoc, getDocs, limit, onSnapshot, orderBy, query, setDoc, updateDoc, where, writeBatch } from '@angular/fire/firestore';
 import { SalesSummary, Totals } from '../interfaces/database.interface';
-import { from, merge, Observable } from 'rxjs';
+import { from, merge, Observable, tap } from 'rxjs';
 
 const totalsPATH = 'ventas'
 const summaryPATH = 'resumen'
@@ -28,8 +28,15 @@ export class DatabaseService {
     return docData(docRef, { idField: 'id' }) as Observable<SalesSummary | null>;
   }
 
-  async getTotalsFilter(month: string) {
-    const daysQuery = query(collection(this.firestore, 'resumen'), where('month', '==', month));
+  async getYears() {
+    const docRef = doc(this.firestore, 'resumen', 'years');
+    const docSnap = await getDoc(docRef);
+    let years: string[] = docSnap.exists() ? docSnap.data()?.['years'] : [];
+    return years;
+  }
+
+  async getTotalsFilter(month: string, year: string) {
+    const daysQuery = query(collection(this.firestore, 'resumen'), where('month', '==', month), where('year', '==', year));
     console.log(month)
     const querySnapshot = await getDocs(daysQuery);
 
@@ -41,42 +48,117 @@ export class DatabaseService {
     return results;
   }
 
-  async addTotal(value: number) {
+  async addTotal(value: number, type: string) {
     try {
       const longDate = new Date().toLocaleTimeString();
       const venta = {
         total: value,
         timestamp: longDate,
-        id: ''
+        id: '',
+        payment: type
       }
+      // let venta: {};
+
+      // switch (type) {
+      //   case 'transfer':
+      //     venta = {
+      //       total: value,
+      //       timestamp: longDate,
+      //       id: '',
+      //       transfer: true
+      //     }
+      //     break;
+      //   case 'outflow':
+      //     venta = {
+      //       total: value,
+      //       timestamp: longDate,
+      //       id: '',
+      //       outflow: true
+      //     }
+      //     break;
+      //   default:
+      //     venta = {
+      //       total: value,
+      //       timestamp: longDate,
+      //       id: ''
+      //     }
+      //     break;
+      // }
 
       const docRef = await addDoc(this.totalsCollection, venta);
 
-      await updateDoc(docRef, {id: docRef.id});
+      await updateDoc(docRef, { id: docRef.id });
     } catch (error) {
       console.error('Error adding document: ', error);
     }
 
-    this.addSummary(value);
+    this.addSummary(value, type);
   }
 
-  async addSummary(value: number) {
+  async addSummary(value: number, type: string) {
     const summaryRef = doc(this.firestore, 'resumen', shortDate);
-    const month = shortDate.split('-')[1]; 
+    const month = shortDate.split('-')[1];
+    const year = shortDate.slice(-4);
 
     const docSnap = await getDoc(summaryRef);
     const salesSummary = docSnap.exists() ? docSnap.data() : {};
 
     const currentTotal = salesSummary?.['total'] || 0;
     const currentConteo = salesSummary?.['conteo'] || 0;
+    const currentOutflow = salesSummary?.['outflow'] || 0;
+    const currentTransfer = salesSummary?.['transfer'] || 0;
+    const currrentTotalNeto = salesSummary?.['totalNeto'] || 0;
 
-    const newTotal = currentTotal + value;
-    const newConteo = currentConteo + 1;
+    let newTotal = currentTotal
+    let newConteo = currentConteo;
+    let newOutflow = currentOutflow;
+    let newtransfer = currentTransfer;
+    let newtotalNeto =  currrentTotalNeto;
 
-    setDoc(summaryRef, { total: newTotal, conteo: newConteo, month:  month, date: date}, { merge: true })
+    if (type === 'outflow') {
+      newOutflow -= value;
+      newtotalNeto -= value;
+    } else if (type === 'transfer') {
+      newTotal += value;
+      newConteo += 1;
+      newtransfer += value;
+      // newtotalNeto -= value;
+    } else {
+      newTotal += value;
+      newConteo += 1;
+      newtotalNeto += value;
+    }
+
+    // const newTotal = currentTotal + value;
+    // let newConteo = currentConteo + 1;
+
+    setDoc(summaryRef, {
+      total: newTotal,
+      conteo: newConteo,
+      outflow: newOutflow,
+      transfer: newtransfer,
+      totalNeto: newtotalNeto,
+      month: month,
+      date: date,
+      year: year,
+    }, { merge: true })
+
+    const years = await this.getYears();
+
+    if (!years.includes(year)) {
+      this.addYear(year);
+    }
   }
 
-  async removeSummary(value: number) {
+  async addYear(value: string) {
+    const yearRef = doc(this.firestore, 'resumen', 'years');
+
+    await setDoc(yearRef, {
+      years: arrayUnion(value)
+    })
+  }
+
+  async removeSummary(value: number, type: string) {
     const summaryRef = doc(this.firestore, 'resumen', shortDate);
 
     const docSnap = await getDoc(summaryRef);
@@ -84,26 +166,53 @@ export class DatabaseService {
 
     const currentTotal = salesSummary?.['total'] || 0;
     const currentConteo = salesSummary?.['conteo'] || 0;
+    const currrentTotalNeto = salesSummary?.['totalNeto'] || 0;
+    const currentOutflow = salesSummary?.['outflow'] || 0;
+    const currentTransfer = salesSummary?.['transfer'] || 0;
+ 
+    let newTotal = currentTotal;
+    let newConteo = currentConteo;
+    let newtotalNeto = currrentTotalNeto;
+    let newOutflow = currentOutflow;
+    let newtransfer = currentTransfer;
 
-    const newTotal = currentTotal - value;
-    const newConteo = currentConteo - 1;
+    if (type === 'outflow') {
+      newtotalNeto += value;
+      newOutflow += value;
+    } else if (type === 'transfer') {
+      newTotal -= value;
+      newConteo -= 1;
+      newtransfer -= value;
+    } else {
+      newTotal -= value;
+      newConteo -= 1;
+      newtotalNeto -= value;
+    }
+    // const newTotal = currentTotal - value;
+    // const newConteo = currentConteo - 1;
 
-    setDoc(summaryRef, { total: newTotal, conteo: newConteo }, { merge: true })
+    setDoc(summaryRef, { 
+      total: newTotal, 
+      conteo: newConteo, 
+      totalNeto: newtotalNeto, 
+      outflow: newOutflow,
+      transfer: newtransfer
+    }, { merge: true })
   }
 
-  async deleteTotal(id: string, total: number) {
+  async deleteTotal(id: string, total: number, type: string) {
     await deleteDoc(doc(this.firestore, 'ventas', id));
-    await this.removeSummary(total);
+    await this.removeSummary(total, type);
   }
 
   async deleteCollection(collectionName: string) {
     const collectionRef = collection(this.firestore, collectionName);
     const batchSize = 500;
 
-    while(true) {
+    while (true) {
       const querySnapshot = await getDocs(query(collectionRef, limit(batchSize)));
 
-      if(querySnapshot.empty) {
+      if (querySnapshot.empty) {
         break;
       }
 

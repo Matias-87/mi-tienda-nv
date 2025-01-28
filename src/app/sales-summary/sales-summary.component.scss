@@ -54,6 +54,10 @@
         font-size: 35px;
         padding: 10px;
         background-color: v.$secondary-color;
+
+        th {
+            padding: 10px;
+        }
     }
 
     &__time {
@@ -104,4 +108,23 @@
         border-bottom: 2px solid v.$primary-color;
         border-right: 2px solid v.$primary-color;
     }
+
+    &__outflows {
+        font-size: 18px;
+        background-color: v.$red-color;
+
+        th {
+            border-top: 2px solid v.$primary-color;
+        }
+    }
+}
+
+.no-results-msg {
+    width: 90%;
+    font-size: 30px;
+    color: v.$text-color;
+    background-color: v.$primary-color;
+    padding: 10px;
+    text-align: center;
+    border-radius: 20px;
 }

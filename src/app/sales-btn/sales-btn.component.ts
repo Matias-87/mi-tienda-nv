@@ -14,16 +14,18 @@ export class SalesBtnComponent {
   private _databaseService = inject(DatabaseService);
 
   modalChange: string = 'modal-hidden';
+  // modalChange = 'modal'
   modalChangeEndDay: string = 'modal-hidden';
   salesBtn: string = 'sales-btn';
   endBtn: string = 'end-btn'
   totalPrice: string = '';
   modalClass: boolean = false;
+  paymentValue: string = 'cash';
 
   async addTotals(value: number) {
     try {
       this.changeClass();
-      await this._databaseService.addTotal(value);
+      await this._databaseService.addTotal(value, this.paymentValue);
     } catch (error) {
       console.error(error);
       this.changeClass();

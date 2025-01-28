@@ -5,7 +5,22 @@
             <h2 class="total" #total>Total:</h2>
             <input type="number" [(ngModel)]="totalPrice" #newNum>
         </div>
-
+        <fieldset class="modal__card-radio">
+            <!-- <legend>Metodo de Pago</legend> -->
+            <div>
+                <input type="radio" [(ngModel)]="paymentValue" id="cash" name="pay" value="cash" checked>
+                <label for="cash">Efectivo</label>
+            </div>
+            <div>
+                <input type="radio" [(ngModel)]="paymentValue" id="transfer" name="pay" value="transfer">
+                <label for="transfer">Transferencia</label>
+            </div>
+            <div>
+                <input type="radio" [(ngModel)]="paymentValue" id="outflow" name="pay" value="outflow">
+                <label for="outflow">Salida</label>
+            </div>
+        </fieldset>
+        <!-- <p>{{paymentValue}}</p> -->
         <div class="modal__card-btns">
             <button class="cancel" (click)="changeClass()">Cancelar</button>
             <button class="accept" (click)="addTotals(+newNum.value)">Aceptar</button>

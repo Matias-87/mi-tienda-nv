@@ -12,17 +12,27 @@
             <tr>
                 <th scope="row" class="sales-list__time">
                     <li>{{products.timestamp}}</li>
-                    <button (click)="deleteTotal(products.id, products.total)">
+                    <button (click)="deleteTotal(products.id, products.total, products.payment)">
                         <i class="bi bi-x"></i>
                     </button>
                 </th>
-                <td class="sales-list__price">{{products.total}}</td>
+                <td class="sales-list__price" 
+                    [class.sales-list__out-row]="products.payment === 'outflow'"
+                    [class.sales-list__transfer]="products.payment === 'transfer'">
+                    {{products.total}}
+                </td>
             </tr>
             }
         </tbody>
         <tfoot class="sales-list__foot">
             <tr class="sales-list__total">
-                <th scope="row">Total: ${{salesSummary$?.total}}</th>
+                <th scope="row">Total Bruto: ${{salesSummary$}}</th>
+            </tr>
+            <tr class="sales-list__outflows">
+                <th scope="row">Salidas: ${{outflowsSummary$}}</th>
+            </tr>
+            <tr class="sales-list__neto">
+                <th scope="row">Total Neto: ${{totalNeto$}}</th>
             </tr>
         </tfoot>
     </table>

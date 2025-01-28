@@ -31,6 +31,24 @@
         background-color: v.$secondary-color;
     }
 
+    &__outflows {
+        font-size: 18px;
+        background-color: v.$red-color;
+
+        th {
+            border-top: 2px solid v.$primary-color;
+        }
+    }
+
+    &__neto {
+        font-size: 18px;
+        background-color: v.$secondary-color;
+
+        th {
+            border-top: 2px solid v.$primary-color;
+        }
+    }
+
     &__time {
         display: flex;
         align-items: center;
@@ -53,7 +71,6 @@
 
             &:hover {
                 background-color: v.$primary-color;
-
             }
 
             i {
@@ -69,5 +86,13 @@
         font-size: 20px;
         font-weight: 500;
         border-bottom: 2px solid v.$primary-color;
+    }
+
+    &__out-row {
+        background-color: v.$red-color;
+    }
+
+    &__transfer {
+        background-color: v.$blue-color;
     }
 }

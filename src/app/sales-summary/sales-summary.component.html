@@ -1,16 +1,21 @@
 <div class="principal-container pt-4">
-    <div class="filters">
-        <select name="month" id="month" class="filters__filter h1">
-            <option selected>Seleccione un Mes</option>
+    <!-- <div> -->
+    <form [formGroup]="filterForm" class="filters">
+        <select formControlName="monthFilter" name="month" id="month" class="filters__filter h1">
+            <option value="" selected>Seleccione un Mes</option>
             @for(month of monthsArr; track $index) {
-            <option value="$index">{{month}}</option>
+            <option [value]="$index + 1">{{month}}</option>
             }
         </select>
-        <select name="year" id="year" class="filters__filter h1">
-            <option selected>Seleccione un Año</option>
-            <option value="1">2025</option>
+        <select formControlName="yearFilter" name="year" id="year" class="filters__filter h1">
+            <option value="" selected>Seleccione un Año</option>
+            @for (year of years; track $index) {
+            <option [value]="year">{{year}}</option>
+            }
         </select>
-    </div>
+    </form>
+    <!-- </div> -->
+    @if (result?.length) {
     <table class="sales-list" [cellPadding]="0" [cellSpacing]="0">
         <thead class="sales-list__head">
             <tr>
@@ -21,19 +26,27 @@
         </thead>
         <tbody class="sales-list__body">
             @for (sales of result; track $index) {
-                <tr>
-                    <th scope="row" class="sales-list__time">
-                        <li>{{sales?.date}}</li>
-                    </th>
-                    <td class="sales-list__sales">{{sales?.conteo}}</td>
-                    <td class="sales-list__price">{{sales?.total}}</td>
-                </tr>
+            <tr>
+                <th scope="row" class="sales-list__time">
+                    <li>{{sales?.date}}</li>
+                </th>
+                <td class="sales-list__sales">{{sales?.conteo}}</td>
+                <td class="sales-list__price">{{sales?.total}}</td>
+            </tr>
             }
         </tbody>
         <tfoot class="sales-list__foot">
             <tr class="sales-list__total">
-                <th scope="row">Total del Mes: 200000000</th>
+                <th scope="row">Total del Mes: ${{monthTotal}}</th>
+            </tr>
+            <tr class="sales-list__outflows">
+                <th scope="row">Salidas del Mes: ${{monthOutflow}}</th>
             </tr>
         </tfoot>
     </table>
+    } @else {
+        <p class="no-results-msg">
+            No hay resultados para la fecha ingresada.
+        </p>
+    }
 </div>
