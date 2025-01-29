@@ -50,7 +50,7 @@ export class DatabaseService {
 
   async addTotal(value: number, type: string) {
     try {
-      const longDate = new Date().toLocaleTimeString();
+      const longDate = new Date().toLocaleTimeString('es-ES', {hour12: false});
       const venta = {
         total: value,
         timestamp: longDate,

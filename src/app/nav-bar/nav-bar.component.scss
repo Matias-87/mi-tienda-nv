@@ -8,7 +8,8 @@
     bottom: 0;
     border-top: 1px solid v.$secondary-color;
 
-    ul, li {
+    ul,
+    li {
         padding: 0;
         margin: 0;
         list-style: none;
@@ -26,7 +27,7 @@
         display: inline-flex;
     }
 
-    a, button {
+    a {
         background: transparent;
         border: none;
         border-radius: 10px;
@@ -34,6 +35,11 @@
         cursor: pointer;
         margin: 10px;
         border: 2px solid v.$secondary-color;
+
+        .hidden-text {
+            visibility: hidden;
+            position: absolute;
+        }
 
         i {
             color: #fff;
@@ -43,6 +49,27 @@
 
         &:hover {
             background-color: v.$secondary-color;
+        }
+    }
+}
+
+@media (min-width: 700px) {
+    .nav-bar {
+        a {
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            .hidden-text {
+                visibility: visible;
+                position: relative;
+                color: v.$text-color;
+                text-decoration: none;
+                margin: 0px;
+                margin-left: 10px;
+                text-align: center;
+            }
         }
     }
 }

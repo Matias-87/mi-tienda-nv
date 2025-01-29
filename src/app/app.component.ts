@@ -1,7 +1,7 @@
 import { AsyncPipe } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { addDoc, collection, collectionData, Firestore } from '@angular/fire/firestore';
-import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { ChildrenOutletContexts, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { Interface } from 'readline';
 import { Observable } from 'rxjs';
 import { DatabaseService } from './data-access/database.service';
@@ -9,6 +9,7 @@ import { SalesSummary } from './interfaces/database.interface';
 import { SalesListComponent } from "./sales-list/sales-list.component";
 import { SalesBtnComponent } from "./sales-btn/sales-btn.component";
 import { NavBarComponent } from './nav-bar/nav-bar.component';
+import { changeComponentAnimation } from '../animations/animations';
 
 const PATH = 'totals';
 
@@ -17,12 +18,20 @@ const PATH = 'totals';
   standalone: true,
   imports: [NavBarComponent, RouterOutlet],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  styleUrl: './app.component.scss',
+  animations: [changeComponentAnimation]
 })
 export class AppComponent {
   title(title: any) {
     throw new Error('Method not implemented.');
   }
+
+  contexts = inject(ChildrenOutletContexts);
+
+  getRouteAnimationData() {
+    return this.contexts.getContext('primary')?.route?.snapshot?.data?.['animation']
+  }
+
   // private _databaseService = inject(DatabaseService);
 
   // totals$ = this._databaseService.getTotals();

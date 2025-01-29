@@ -44,6 +44,7 @@ export class SalesBtnComponent {
     } else {
       this.modalChange = 'modal';
       this.totalPrice = '';
+      this.paymentValue = 'cash'
       this.modalClass = true;
     }
   }

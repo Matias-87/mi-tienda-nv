@@ -2,10 +2,10 @@
 
 .fixed-btns {
     position: fixed;
-    bottom: 10vh;
+    bottom: 75px;
     right: 0;
     height: 120px;
-    padding: 10px;
+    padding: 5px;
     // background-color: blue;
     display: flex;
     align-items: center;
@@ -14,35 +14,40 @@
 
 .sales-btn {
     // position: fixed;
-    height: 80px;
-    width: 80px;
+    height: 60px;
+    width: 60px;
     font-size: 35px;
     border-radius: 50%;
     margin: 20px;
     background-color: v.$primary-color;
     color: v.$text-color;
     border: 2px solid v.$text-color;
+
+    &:hover {
+        background-color: v.$secondary-color-hover;
+    }
 }
 
 .end-btn {
     display: flex;
     align-items: center;
     // justify-content: center;
-    height: 50px;
-    width: 50px;
+    height: 40px;
+    width: 40px;
     font-size: 20px;
     border: none;
     border-radius: 50%;
     color: v.$text-color;
     background-color: v.$red-color;
     overflow: hidden;
+    border: 1px solid v.$text-color;
     transition: 
         width 1.5s,
-        border-radius .5s ease;
+        border-radius 1.5s ease;
     // text-wrap: nowarp;
 
     i {
-        margin: 10px;
+        margin: 3px;
     }
 
     p {
@@ -73,7 +78,7 @@
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        height: 50%;
+        height: 450px;
         width: 80%;
         background-color: v.$primary-color;
         border-radius: 20px;
@@ -90,7 +95,7 @@
         }
 
         &-total {
-            height: 60%;
+            height: 100px;
             width: 100%;
             display: flex;
             justify-content: center;
@@ -136,10 +141,17 @@
             }
         }
 
+        // Acomodar correctamente como se debe ver el modal en mobil
+        // ademas de modificar el height
+        
         &-radio {
-            width: 100%;
+            // width: 100%;
             display: flex;
-            align-items: center;
+            // align-items: center;
+            flex-direction: column;
+            margin-top: 0px !important;
+            margin-bottom: 0px !important;
+            margin: auto;
             justify-content: space-evenly;
             margin-bottom: 20px;
 
@@ -185,4 +197,34 @@
 
 .modal-hidden {
     visibility: hidden;
+}
+
+@media (min-width: 700px) {
+    .modal__card {
+        width: 600px;
+
+        &-radio {
+            width: 100%;
+            flex-direction: row;
+        }
+    }
+
+    .fixed-btns {
+        margin: 10px;
+        padding: 10px;
+        // bottom: 10vh;
+    }
+    .sales-btn {
+        height: 80px;
+        width: 80px;
+    }
+
+    .end-btn {
+        height: 50px;
+        width: 50px;
+
+        i {
+            margin: 8px;
+        }
+    }
 }

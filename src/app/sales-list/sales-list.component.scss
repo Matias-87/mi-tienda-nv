@@ -96,3 +96,19 @@
         background-color: v.$blue-color;
     }
 }
+
+@media (min-width: 700px) {
+    // .principal-container {
+    //     background-color: red;
+    // }
+
+    .sales-list {
+        width: 70%;
+    }
+}
+
+@media (min-width: 1200px) {
+    .sales-list {
+        width: 60%;
+    }
+}

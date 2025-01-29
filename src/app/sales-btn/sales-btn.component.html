@@ -9,15 +9,15 @@
             <!-- <legend>Metodo de Pago</legend> -->
             <div>
                 <input type="radio" [(ngModel)]="paymentValue" id="cash" name="pay" value="cash" checked>
-                <label for="cash">Efectivo</label>
+                <label for="cash" class="h5">Efectivo</label>
             </div>
             <div>
                 <input type="radio" [(ngModel)]="paymentValue" id="transfer" name="pay" value="transfer">
-                <label for="transfer">Transferencia</label>
+                <label for="transfer" class="h5">Transferencia</label>
             </div>
             <div>
                 <input type="radio" [(ngModel)]="paymentValue" id="outflow" name="pay" value="outflow">
-                <label for="outflow">Salida</label>
+                <label for="outflow" class="h5">Salida</label>
             </div>
         </fieldset>
         <!-- <p>{{paymentValue}}</p> -->

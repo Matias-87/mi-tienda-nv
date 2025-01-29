@@ -1,22 +1,5 @@
-<div class="routes-container bg-black">
-  <!-- <app-sales-list></app-sales-list> -->
+<div [@routeAnimation]="getRouteAnimationData()" class="routes-container bg-black">
   <router-outlet></router-outlet>
-  <app-nav-bar></app-nav-bar>
-  <!-- <h1>Lista de Firebase</h1>
-  <h2>Nueva Venta:</h2>
-  <div>
-    <input type="number" #totalNumber>
-    <button (click)="addTotals(+totalNumber.value); totalNumber.value = ''">Enviar</button>
-  </div>
-
-  <ul>
-    @for (total of totals$ | async; track total.id) {
-    <li>
-      {{total.total}}
-    </li>
-    }
-  </ul>
-
-  <p>Total: {{salesSummary$?.total}}</p> -->
-
 </div>
+
+<app-nav-bar></app-nav-bar>
