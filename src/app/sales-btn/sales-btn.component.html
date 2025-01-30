@@ -1,5 +1,5 @@
-<div [ngClass]="modalChange">
-    <div class="modal__card">
+<div class="modal" [@fadeInOut]="modalClass ? 'visible' : 'hidden'">
+    <div class="modal__card" >
         <h1 class="modal__card-text">Nueva Venta</h1>
         <div class="modal__card-total">
             <h2 class="total" #total>Total:</h2>
@@ -27,8 +27,8 @@
         </div>
     </div>
 </div>
-
-<div [ngClass]="modalChangeEndDay">
+ 
+<div class="modal" [@fadeInOut]="modalClassEndDay ? 'visible' : 'hidden'">
     <div class="modal__card modal__end-day">
         <h1 class="modal__card-text">Terminar el Dia</h1>
         <div class="modal__card-total">
