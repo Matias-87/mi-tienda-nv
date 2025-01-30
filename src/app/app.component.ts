@@ -22,9 +22,7 @@ const PATH = 'totals';
   animations: [changeComponentAnimation]
 })
 export class AppComponent {
-  title(title: any) {
-    throw new Error('Method not implemented.');
-  }
+  title = 'MiTienda'
 
   contexts = inject(ChildrenOutletContexts);
 
