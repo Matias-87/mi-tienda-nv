@@ -15,7 +15,7 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@ngx-env/builder",
+          "builder": "@ngx-env/builder:application",
           "options": {
             "outputPath": "dist/mi-tienda-nv",
             "index": "src/index.html",
