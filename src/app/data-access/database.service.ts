@@ -50,7 +50,13 @@ export class DatabaseService {
 
   async addTotal(value: number, type: string) {
     try {
-      const longDate = new Date().toLocaleTimeString('es-ES', {hour12: false});
+      let longDate = new Date().toLocaleTimeString('es-ES', {
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false
+      });
+
       const venta = {
         total: value,
         timestamp: longDate,
@@ -108,36 +114,69 @@ export class DatabaseService {
     const currentOutflow = salesSummary?.['outflow'] || 0;
     const currentTransfer = salesSummary?.['transfer'] || 0;
     const currrentTotalNeto = salesSummary?.['totalNeto'] || 0;
-
-    let newTotal = currentTotal
-    let newConteo = currentConteo;
-    let newOutflow = currentOutflow;
-    let newtransfer = currentTransfer;
-    let newtotalNeto =  currrentTotalNeto;
-
-    if (type === 'outflow') {
-      newOutflow -= value;
-      newtotalNeto -= value;
-    } else if (type === 'transfer') {
-      newTotal += value;
-      newConteo += 1;
-      newtransfer += value;
-      // newtotalNeto -= value;
-    } else {
-      newTotal += value;
-      newConteo += 1;
-      newtotalNeto += value;
+    const currentTrusted = salesSummary?.['trusted'] || 0;
+ 
+    let newValues = {
+      total: currentTotal,
+      conteo: currentConteo,
+      outflow: currentOutflow,
+      transfer: currentTransfer,
+      totalNeto: currrentTotalNeto,
+      trusted: currentTrusted
     }
+
+    // let newTotal = currentTotal
+    // let newConteo = currentConteo;
+    // let newOutflow = currentOutflow;
+    // let newtransfer = currentTransfer;
+    // let newtotalNeto = currrentTotalNeto;
+
+    switch (type) {
+      case 'outflow':
+        newValues.outflow -= value;
+        newValues.totalNeto -= value;
+        break;
+      case 'transfer':
+        newValues.total += value;
+        newValues.conteo += 1;
+        newValues.transfer += value;
+        break;
+      case 'trusted': 
+        newValues.total += value;
+        newValues.conteo += 1;
+        newValues.trusted += value;
+        break;
+      default:
+        newValues.total += value;
+        newValues.conteo += 1;
+        newValues.totalNeto += value;
+        break;
+    }
+
+    // if (type === 'outflow') {
+    //   newOutflow -= value;
+    //   newtotalNeto -= value;
+    // } else if (type === 'transfer') {
+    //   newTotal += value;
+    //   newConteo += 1;
+    //   newtransfer += value;
+    //   // newtotalNeto -= value;
+    // } else {
+    //   newTotal += value;
+    //   newConteo += 1;
+    //   newtotalNeto += value;
+    // }
 
     // const newTotal = currentTotal + value;
     // let newConteo = currentConteo + 1;
 
     setDoc(summaryRef, {
-      total: newTotal,
-      conteo: newConteo,
-      outflow: newOutflow,
-      transfer: newtransfer,
-      totalNeto: newtotalNeto,
+      total: newValues.total,
+      conteo: newValues.conteo,
+      outflow: newValues.outflow,
+      transfer: newValues.transfer,
+      totalNeto: newValues.totalNeto,
+      trusted: newValues.trusted,
       month: month,
       date: date,
       year: year,
@@ -155,7 +194,7 @@ export class DatabaseService {
 
     await setDoc(yearRef, {
       years: arrayUnion(value)
-    })
+    }, { merge: true })
   }
 
   async removeSummary(value: number, type: string) {
@@ -169,34 +208,67 @@ export class DatabaseService {
     const currrentTotalNeto = salesSummary?.['totalNeto'] || 0;
     const currentOutflow = salesSummary?.['outflow'] || 0;
     const currentTransfer = salesSummary?.['transfer'] || 0;
- 
-    let newTotal = currentTotal;
-    let newConteo = currentConteo;
-    let newtotalNeto = currrentTotalNeto;
-    let newOutflow = currentOutflow;
-    let newtransfer = currentTransfer;
+    const currentTrusted = salesSummary?.['trusted'] || 0;
 
-    if (type === 'outflow') {
-      newtotalNeto += value;
-      newOutflow += value;
-    } else if (type === 'transfer') {
-      newTotal -= value;
-      newConteo -= 1;
-      newtransfer -= value;
-    } else {
-      newTotal -= value;
-      newConteo -= 1;
-      newtotalNeto -= value;
+    let newValues = {
+      total: currentTotal,
+      conteo: currentConteo,
+      outflow: currentOutflow,
+      transfer: currentTransfer,
+      totalNeto: currrentTotalNeto,
+      trusted: currentTrusted
     }
+
+    // let newTotal = currentTotal;
+    // let newConteo = currentConteo;
+    // let newtotalNeto = currrentTotalNeto;
+    // let newOutflow = currentOutflow;
+    // let newtransfer = currentTransfer;
+
+    switch (type) {
+      case 'outflow':
+        newValues.outflow += value;
+        newValues.totalNeto += value;
+        break;
+      case 'transfer':
+        newValues.total -= value;
+        newValues.conteo -= 1;
+        newValues.transfer -= value;
+        break;
+      case 'trusted': 
+        newValues.total -= value;
+        newValues.conteo -= 1;
+        newValues.trusted -= value;
+        break;
+      default:
+        newValues.total -= value;
+        newValues.conteo -= 1;
+        newValues.totalNeto -= value;
+        break;
+    }
+
+    // if (type === 'outflow') {
+    //   newtotalNeto += value;
+    //   newOutflow += value;
+    // } else if (type === 'transfer') {
+    //   newTotal -= value;
+    //   newConteo -= 1;
+    //   newtransfer -= value;
+    // } else {
+    //   newTotal -= value;
+    //   newConteo -= 1;
+    //   newtotalNeto -= value;
+    // }
     // const newTotal = currentTotal - value;
     // const newConteo = currentConteo - 1;
 
-    setDoc(summaryRef, { 
-      total: newTotal, 
-      conteo: newConteo, 
-      totalNeto: newtotalNeto, 
-      outflow: newOutflow,
-      transfer: newtransfer
+    setDoc(summaryRef, {
+      total: newValues.total,
+      conteo: newValues.conteo,
+      totalNeto: newValues.totalNeto,
+      outflow: newValues.outflow,
+      transfer: newValues.transfer,
+      trusted: newValues.trusted
     }, { merge: true })
   }
 

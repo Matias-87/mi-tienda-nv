@@ -10,5 +10,6 @@ export interface SalesSummary {
     date: string,
     outflow: number,
     transfer: number,
-    totalNeto: number
+    totalNeto: number,
+    trusted: number
 }

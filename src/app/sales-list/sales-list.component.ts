@@ -20,6 +20,7 @@ export class SalesListComponent implements OnInit, OnDestroy {
   salesSummary$: number | undefined;
   outflowsSummary$: number | undefined;
   transferSummary$: number | undefined;
+  trustedSummary$: number | undefined;
   totalNeto$: number | undefined;
 
   async ngOnInit(): Promise<void> {
@@ -27,7 +28,9 @@ export class SalesListComponent implements OnInit, OnDestroy {
       this.salesSummary$ = data?.total;
       this.outflowsSummary$ = data?.outflow;
       this.transferSummary$ = data?.transfer;
+      this.trustedSummary$ = data?.trusted;
       this.totalNeto$ = data?.totalNeto;
+
       // if ( typeof this.salesSummary$ === 'number' && 
       //   typeof this.outflowsSummary$ === 'number' && 
       //   typeof this.transferSummary$ === 'number') {

@@ -18,7 +18,8 @@
                 </th>
                 <td class="sales-list__price" 
                     [class.sales-list__out-row]="products.payment === 'outflow'"
-                    [class.sales-list__transfer]="products.payment === 'transfer'">
+                    [class.sales-list__transfer]="products.payment === 'transfer'"
+                    [class.sales-list__trusted]="products.payment === 'trusted'">
                     {{products.total}}
                 </td>
             </tr>
@@ -28,9 +29,16 @@
             <tr class="sales-list__total">
                 <th scope="row">Total Bruto: ${{salesSummary$}}</th>
             </tr>
-            <tr class="sales-list__outflows">
-                <th scope="row">Salidas: ${{outflowsSummary$}}</th>
-            </tr>
+            @if (trustedSummary$) {
+                <tr class="sales-list__trusted">
+                    <th scope="row">Fiado: ${{trustedSummary$}}</th>
+                </tr>
+            }
+            @if (outflowsSummary$) {
+                <tr class="sales-list__outflows">
+                    <th scope="row">Salidas: ${{outflowsSummary$}}</th>
+                </tr>
+            }
             <tr class="sales-list__neto">
                 <th scope="row">Total Neto: ${{totalNeto$}}</th>
             </tr>

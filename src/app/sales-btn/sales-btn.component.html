@@ -16,6 +16,10 @@
                 <label for="transfer" class="h5">Transferencia</label>
             </div>
             <div>
+                <input type="radio" [(ngModel)]="paymentValue" id="trusted" name="pay" value="trusted">
+                <label for="trusted" class="h5">Fiado</label>
+            </div>
+            <div>
                 <input type="radio" [(ngModel)]="paymentValue" id="outflow" name="pay" value="outflow">
                 <label for="outflow" class="h5">Salida</label>
             </div>

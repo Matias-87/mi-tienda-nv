@@ -1,8 +1,8 @@
 import { NgClass } from '@angular/common';
 import { Component, EventEmitter, inject, Output } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { DatabaseService } from '../data-access/database.service';
 import { fadeInOutAnimation } from '../../animations/animations';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-sales-btn',
