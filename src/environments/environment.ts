@@ -1,10 +1,10 @@
 export const environment = {
     firebase: {
-        projectId: process.env['NG_APP_PROJECTID_TEST'],
-        appId: process.env['NG_APP_APPID_TEST'],
-        storageBucket: process.env['NG_APP_STORAGEBUCKET_TEST'],
-        apiKey: process.env['NG_APP_APIKEY_TEST'],
-        authDomain: process.env['NG_APP_AUTHDOMAIN_TEST'],
-        messagingSenderId: process.env['NG_APP_MESSAGINGSENDERID_TEST']
+        apiKey: "AIzaSyDgQrM_uBI0NlCeD9EX0ZlvO7jHzi14mf0",
+        authDomain: "my-app-test-8d42d.firebaseapp.com",
+        projectId: "my-app-test-8d42d",
+        storageBucket: "my-app-test-8d42d.firebasestorage.app",
+        messagingSenderId: "796306330295",
+        appId: "1:796306330295:web:6231438ca6f22e33df7332"
     }
 };

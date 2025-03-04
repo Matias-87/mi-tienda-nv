@@ -1,14 +1,14 @@
 @use '../../partials/variables' as v;
 
 .principal-container {
-    height: 90vh;
+    height: 100vh;
     width: 100vw;
     display: flex;
     align-items: center;
     flex-direction: column;
     // overflow-y: scroll;
     overflow-x: hidden;
-    padding-bottom: 30px;
+    padding-bottom: 95px;
 }
 
 .filters {
@@ -109,12 +109,25 @@
         border-right: 2px solid v.$primary-color;
     }
 
-    &__outflows {
+    &__tr {
         font-size: 18px;
-        background-color: v.$red-color;
+        background-color: v.$secondary-color;
 
         th {
             border-top: 2px solid v.$primary-color;
+            padding: 5px;
+        }
+
+        &.outflows {
+            background-color: v.$red-color;
+        }
+
+        &.trusted {
+            background-color: v.$yellow-color;
+        }
+
+        &.transfer {
+            background-color: v.$blue-color;
         }
     }
 }

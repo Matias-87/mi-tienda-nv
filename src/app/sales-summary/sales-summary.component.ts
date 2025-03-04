@@ -26,6 +26,9 @@ export class SalesSummaryComponent implements OnInit {
   result: any;
   monthTotal: number = 0;
   monthOutflow: number = 0;
+  monthNeto: number = 0;
+  monthTrusted: number = 0;
+  monthTransfer: number = 0;
   years: string[] = [];
 
   async ngOnInit(): Promise<void> {
@@ -45,5 +48,8 @@ export class SalesSummaryComponent implements OnInit {
     this.result = await this._databaseService.getTotalsFilter(month, year);
     this.monthTotal = this.result.reduce((acc: number, val: SalesSummary) => acc + val.total, 0);
     this.monthOutflow = this.result.reduce((acc: number, val: SalesSummary) => acc + val.outflow, 0);
+    this.monthNeto = this.result.reduce((acc: number, val: SalesSummary) => acc + val.totalNeto, 0);
+    this.monthTrusted = this.result.reduce((acc: number, val: SalesSummary) => acc + val.trusted, 0); 
+    this.monthTransfer = this.result.reduce((acc: number, val: SalesSummary) => acc + val.transfer, 0);
   }
 }

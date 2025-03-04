@@ -37,10 +37,25 @@
         </tbody>
         <tfoot class="sales-list__foot">
             <tr class="sales-list__total">
-                <th scope="row">Total del Mes: ${{monthTotal}}</th>
+                <th scope="row" colspan="3">Total Bruto del Mes: ${{monthTotal}}</th>
             </tr>
-            <tr class="sales-list__outflows">
-                <th scope="row">Salidas del Mes: ${{monthOutflow}}</th>
+            @if (monthTransfer) {
+                <tr class="sales-list__tr transfer">
+                    <th scope="row" colspan="3">Transferencias en el Mes: ${{monthTransfer}}</th>
+                </tr>
+            }
+            @if (monthTrusted) {
+                <tr class="sales-list__tr trusted">
+                    <th scope="row" colspan="3">Fiado en el Mes: ${{monthTrusted}}</th>
+                </tr>
+            }
+            @if (monthOutflow) {
+                <tr class="sales-list__tr outflows">
+                    <th scope="row" colspan="3">Salidas del Mes: ${{monthOutflow}}</th>
+                </tr>
+            }
+            <tr class="sales-list__tr neto">
+                <th scope="row" colspan="3">Total Neto del Mes: ${{monthNeto}}</th>
             </tr>
         </tfoot>
     </table>

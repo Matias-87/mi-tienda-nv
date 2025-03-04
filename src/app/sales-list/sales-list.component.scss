@@ -29,32 +29,31 @@
     &__total {
         font-size: 35px;
         background-color: v.$secondary-color;
-    }
-
-    &__outflows {
-        font-size: 18px;
-        background-color: v.$red-color;
 
         th {
-            border-top: 2px solid v.$primary-color;
+            padding: 10px;
         }
     }
 
-    &__trusted {
-        font-size: 18px;
-        background-color: v.$yellow-color;
-
-        th {
-            border-top: 2px solid v.$primary-color;
-        }
-    }
-
-    &__neto {
+    &__tr {
         font-size: 18px;
         background-color: v.$secondary-color;
 
         th {
             border-top: 2px solid v.$primary-color;
+            padding: 5px;
+        }
+
+        &.outflows {
+            background-color: v.$red-color;
+        }
+
+        &.trusted {
+            background-color: v.$yellow-color;
+        }
+
+        &.transfer {
+            background-color: v.$blue-color;
         }
     }
 
@@ -95,18 +94,19 @@
         font-size: 20px;
         font-weight: 500;
         border-bottom: 2px solid v.$primary-color;
-    }
 
-    &__out-row {
-        background-color: v.$red-color;
-    }
+        &.transfer {
+            background-color: v.$blue-color;
+        }
 
-    &__transfer {
-        background-color: v.$blue-color;
-    }
 
-    &__trusted {
-        background-color: v.$yellow-color;
+        &.outflow {
+            background-color: v.$red-color;
+        }
+
+        &.trusted {
+            background-color: v.$yellow-color;
+        }
     }
 }
 
