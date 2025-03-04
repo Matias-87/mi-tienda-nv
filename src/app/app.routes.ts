@@ -6,6 +6,6 @@ import { animation } from '@angular/animations';
 export const routes: Routes = [
     { path: 'home-page', component: SalesListComponent, data: { animation: 'home-page' } },
     { path: 'sales-summary', component: SalesSummaryComponent, data: { animation: 'sales-summary' } },
-    { path: '**', component: SalesListComponent },
     { path: '', redirectTo: '/home-page', pathMatch: 'full' },
+    { path: '**', redirectTo: '/home-page' },
 ];

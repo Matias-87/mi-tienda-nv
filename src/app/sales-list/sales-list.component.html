@@ -17,9 +17,9 @@
                     </button>
                 </th>
                 <td class="sales-list__price" 
-                    [class.sales-list__out-row]="products.payment === 'outflow'"
-                    [class.sales-list__transfer]="products.payment === 'transfer'"
-                    [class.sales-list__trusted]="products.payment === 'trusted'">
+                    [class.outflow]="products.payment === 'outflow'"
+                    [class.transfer]="products.payment === 'transfer'"
+                    [class.trusted]="products.payment === 'trusted'">
                     {{products.total}}
                 </td>
             </tr>
@@ -29,17 +29,22 @@
             <tr class="sales-list__total">
                 <th scope="row">Total Bruto: ${{salesSummary$}}</th>
             </tr>
+            @if (transferSummary$) {
+                <tr class="sales-list__tr transfer">
+                    <th scope="row">Transferencias: ${{transferSummary$}}</th>
+                </tr>
+            }
             @if (trustedSummary$) {
-                <tr class="sales-list__trusted">
+                <tr class="sales-list__tr trusted">
                     <th scope="row">Fiado: ${{trustedSummary$}}</th>
                 </tr>
             }
             @if (outflowsSummary$) {
-                <tr class="sales-list__outflows">
+                <tr class="sales-list__tr outflows">
                     <th scope="row">Salidas: ${{outflowsSummary$}}</th>
                 </tr>
             }
-            <tr class="sales-list__neto">
+            <tr class="sales-list__tr neto">
                 <th scope="row">Total Neto: ${{totalNeto$}}</th>
             </tr>
         </tfoot>
