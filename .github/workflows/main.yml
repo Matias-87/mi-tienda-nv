@@ -21,6 +21,20 @@ jobs:
     - name: Install dependencies
       run: npm install
 
+    - name: Generate environment.prod.ts
+      run: |
+        echo "export const environment = {" > src/environments/environment.prod.ts
+        echo "  production: true," >> src/environments/environment.prod.ts
+        echo "  firebase: {" >> src/environments/environment.prod.ts
+        echo "    apiKey: '${{ secrets.API_KEY }}'," >> src/environments/environment.prod.ts
+        echo "    authDomain: '${{ secrets.AUTH_DOMAIN }}'," >> src/environments/environment.prod.ts
+        echo "    projectId: '${{ secrets.PROJECT_ID }}'," >> src/environments/environment.prod.ts
+        echo "    storageBucket: '${{ secrets.STORAGE_BUCKET }}'," >> src/environments/environment.prod.ts
+        echo "    messagingSenderId: '${{ secrets.MESSAGING_SENDER_ID }}'," >> src/environments/environment.prod.ts
+        echo "    appId: '${{ secrets.APP_ID }}'" >> src/environments/environment.prod.ts
+        echo "  }" >> src/environments/environment.prod.ts
+        echo "};" >> src/environments/environment.prod.ts
+
     - name: Build Angular project
       run: npm run build --prod
 
