@@ -23,6 +23,9 @@ jobs:
 
     - name: Ensure environments directory exists
       run: mkdir -p src/environments
+
+    - name: Generate empty environment.ts
+      run: echo "" > src/environments/environment.ts
       
     - name: Generate environment.prod.ts
       run: |
