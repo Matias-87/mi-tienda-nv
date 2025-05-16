@@ -1,5 +1,4 @@
 <div class="principal-container pt-4">
-    <!-- <div> -->
     <form [formGroup]="filterForm" class="filters">
         <select formControlName="monthFilter" name="month" id="month" class="filters__filter h1">
             <option value="" selected>Seleccione un Mes</option>
@@ -14,7 +13,6 @@
             }
         </select>
     </form>
-    <!-- </div> -->
     @if (result?.length) {
     <table class="sales-list" [cellPadding]="0" [cellSpacing]="0">
         <thead class="sales-list__head">
@@ -40,19 +38,19 @@
                 <th scope="row" colspan="3">Total Bruto del Mes: ${{monthTotal}}</th>
             </tr>
             @if (monthTransfer) {
-                <tr class="sales-list__tr transfer">
-                    <th scope="row" colspan="3">Transferencias en el Mes: ${{monthTransfer}}</th>
-                </tr>
+            <tr class="sales-list__tr transfer">
+                <th scope="row" colspan="3">Transferencias en el Mes: ${{monthTransfer}}</th>
+            </tr>
             }
             @if (monthTrusted) {
-                <tr class="sales-list__tr trusted">
-                    <th scope="row" colspan="3">Fiado en el Mes: ${{monthTrusted}}</th>
-                </tr>
+            <tr class="sales-list__tr trusted">
+                <th scope="row" colspan="3">Fiado en el Mes: ${{monthTrusted}}</th>
+            </tr>
             }
             @if (monthOutflow) {
-                <tr class="sales-list__tr outflows">
-                    <th scope="row" colspan="3">Salidas del Mes: ${{monthOutflow}}</th>
-                </tr>
+            <tr class="sales-list__tr outflows">
+                <th scope="row" colspan="3">Salidas del Mes: ${{monthOutflow}}</th>
+            </tr>
             }
             <tr class="sales-list__tr neto">
                 <th scope="row" colspan="3">Total Neto del Mes: ${{monthNeto}}</th>
@@ -60,8 +58,8 @@
         </tfoot>
     </table>
     } @else {
-        <p class="no-results-msg">
-            No hay resultados para la fecha ingresada.
-        </p>
+    <p class="no-results-msg">
+        No hay resultados para la fecha ingresada.
+    </p>
     }
 </div>

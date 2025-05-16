@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
-import { addDoc, arrayUnion, collection, collectionData, deleteDoc, doc, docData, Firestore, getDoc, getDocs, limit, onSnapshot, orderBy, query, setDoc, updateDoc, where, writeBatch } from '@angular/fire/firestore';
-import { SalesSummary, Totals } from '../interfaces/database.interface';
-import { from, merge, Observable, tap } from 'rxjs';
+import { addDoc, arrayUnion, collection, collectionData, deleteDoc, doc, docData, Firestore, getDoc, getDocs, limit, orderBy, query, setDoc, updateDoc, where, writeBatch } from '@angular/fire/firestore';
+import { SalesSummary } from '../interfaces/database.interface';
+import { Observable } from 'rxjs';
 
 const totalsPATH = 'ventas'
 const summaryPATH = 'resumen'
@@ -63,33 +63,6 @@ export class DatabaseService {
         id: '',
         payment: type
       }
-      // let venta: {};
-
-      // switch (type) {
-      //   case 'transfer':
-      //     venta = {
-      //       total: value,
-      //       timestamp: longDate,
-      //       id: '',
-      //       transfer: true
-      //     }
-      //     break;
-      //   case 'outflow':
-      //     venta = {
-      //       total: value,
-      //       timestamp: longDate,
-      //       id: '',
-      //       outflow: true
-      //     }
-      //     break;
-      //   default:
-      //     venta = {
-      //       total: value,
-      //       timestamp: longDate,
-      //       id: ''
-      //     }
-      //     break;
-      // }
 
       const docRef = await addDoc(this.totalsCollection, venta);
 
@@ -115,7 +88,7 @@ export class DatabaseService {
     const currentTransfer = salesSummary?.['transfer'] || 0;
     const currrentTotalNeto = salesSummary?.['totalNeto'] || 0;
     const currentTrusted = salesSummary?.['trusted'] || 0;
- 
+
     let newValues = {
       total: currentTotal,
       conteo: currentConteo,
@@ -124,12 +97,6 @@ export class DatabaseService {
       totalNeto: currrentTotalNeto,
       trusted: currentTrusted
     }
-
-    // let newTotal = currentTotal
-    // let newConteo = currentConteo;
-    // let newOutflow = currentOutflow;
-    // let newtransfer = currentTransfer;
-    // let newtotalNeto = currrentTotalNeto;
 
     switch (type) {
       case 'outflow':
@@ -141,7 +108,7 @@ export class DatabaseService {
         newValues.conteo += 1;
         newValues.transfer += value;
         break;
-      case 'trusted': 
+      case 'trusted':
         newValues.total += value;
         newValues.conteo += 1;
         newValues.trusted += value;
@@ -152,23 +119,6 @@ export class DatabaseService {
         newValues.totalNeto += value;
         break;
     }
-
-    // if (type === 'outflow') {
-    //   newOutflow -= value;
-    //   newtotalNeto -= value;
-    // } else if (type === 'transfer') {
-    //   newTotal += value;
-    //   newConteo += 1;
-    //   newtransfer += value;
-    //   // newtotalNeto -= value;
-    // } else {
-    //   newTotal += value;
-    //   newConteo += 1;
-    //   newtotalNeto += value;
-    // }
-
-    // const newTotal = currentTotal + value;
-    // let newConteo = currentConteo + 1;
 
     setDoc(summaryRef, {
       total: newValues.total,
@@ -219,12 +169,6 @@ export class DatabaseService {
       trusted: currentTrusted
     }
 
-    // let newTotal = currentTotal;
-    // let newConteo = currentConteo;
-    // let newtotalNeto = currrentTotalNeto;
-    // let newOutflow = currentOutflow;
-    // let newtransfer = currentTransfer;
-
     switch (type) {
       case 'outflow':
         newValues.outflow += value;
@@ -235,7 +179,7 @@ export class DatabaseService {
         newValues.conteo -= 1;
         newValues.transfer -= value;
         break;
-      case 'trusted': 
+      case 'trusted':
         newValues.total -= value;
         newValues.conteo -= 1;
         newValues.trusted -= value;
@@ -246,21 +190,6 @@ export class DatabaseService {
         newValues.totalNeto -= value;
         break;
     }
-
-    // if (type === 'outflow') {
-    //   newtotalNeto += value;
-    //   newOutflow += value;
-    // } else if (type === 'transfer') {
-    //   newTotal -= value;
-    //   newConteo -= 1;
-    //   newtransfer -= value;
-    // } else {
-    //   newTotal -= value;
-    //   newConteo -= 1;
-    //   newtotalNeto -= value;
-    // }
-    // const newTotal = currentTotal - value;
-    // const newConteo = currentConteo - 1;
 
     setDoc(summaryRef, {
       total: newValues.total,

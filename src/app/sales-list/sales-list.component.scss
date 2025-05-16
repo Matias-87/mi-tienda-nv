@@ -1,4 +1,5 @@
 @use '../../partials/variables' as v;
+@use '../../partials/mixins' as m;
 
 .principal-container {
     height: 100vh;
@@ -6,7 +7,6 @@
     display: flex;
     align-items: center;
     flex-direction: column;
-    // overflow-y: scroll;
     overflow-x: hidden;
     padding-bottom: 95px;
 }
@@ -66,11 +66,9 @@
         border-top: 2px solid v.$secondary-color;
 
         button {
+            @include m.flex-center;
             height: 50px;
             width: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             padding: 0px;
             text-align: center;
             background-color: v.$red-color;
@@ -111,10 +109,6 @@
 }
 
 @media (min-width: 700px) {
-    // .principal-container {
-    //     background-color: red;
-    // }
-
     .sales-list {
         width: 70%;
     }

@@ -30,12 +30,6 @@ export class SalesListComponent implements OnInit, OnDestroy {
       this.transferSummary$ = data?.transfer;
       this.trustedSummary$ = data?.trusted;
       this.totalNeto$ = data?.totalNeto;
-
-      // if ( typeof this.salesSummary$ === 'number' && 
-      //   typeof this.outflowsSummary$ === 'number' && 
-      //   typeof this.transferSummary$ === 'number') {
-      //   this.totalNeto = this.salesSummary$ - this.transferSummary$ + this.outflowsSummary$ ;
-      // }
     })
     console.log(this.totals$)
   }
@@ -43,17 +37,6 @@ export class SalesListComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.getSalesSummarySubscription?.unsubscribe();
   }
-
-  // async addTotals(value: number) {
-  //   try {
-  //     await this._databaseService.addTotal(value, '');
-  //     // this.salesSummary$ = await this._databaseService.getSalesSummary();
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  //   console.log(this.salesSummary$);
-  //   // this.salesSummary$ = this._databaseService.getSalesSummary();
-  // }
 
   async deleteTotal(id: string, total: number, type: string) {
     console.log(id);
@@ -63,5 +46,4 @@ export class SalesListComponent implements OnInit, OnDestroy {
       console.error('The Deletion Failed', error);
     }
   }
-
 }

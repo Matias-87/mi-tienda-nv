@@ -1,5 +1,5 @@
 import { NgClass } from '@angular/common';
-import { Component, EventEmitter, inject, Output } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { DatabaseService } from '../data-access/database.service';
 import { fadeInOutAnimation } from '../../animations/animations';
 import { FormsModule } from '@angular/forms';
@@ -16,7 +16,6 @@ export class SalesBtnComponent {
   private _databaseService = inject(DatabaseService);
 
   modalChange: string = 'modal-hidden';
-  // modalChange = 'modal'
   modalChangeEndDay: string = 'modal-hidden';
   salesBtn: string = 'sales-btn';
   endBtn: string = 'end-btn'
@@ -43,7 +42,6 @@ export class SalesBtnComponent {
   changeClass(): void {
     if (this.modalClass) {
       this.modalChange = 'modal-hidden';
-      // this.modalClass = false;
     } else {
       this.modalChange = 'modal';
       this.totalPrice = '';

@@ -1,4 +1,5 @@
 @use '../../partials/variables' as v;
+@use '../../partials/mixins' as m;
 
 .fixed-btns {
     position: fixed;
@@ -6,14 +7,12 @@
     right: 0;
     height: 120px;
     padding: 5px;
-    // background-color: blue;
     display: flex;
     align-items: center;
     justify-content: space-evenly;
 }
 
 .sales-btn {
-    // position: fixed;
     height: 60px;
     width: 60px;
     font-size: 35px;
@@ -31,20 +30,17 @@
 .end-btn {
     display: flex;
     align-items: center;
-    // justify-content: center;
     height: 40px;
     width: 40px;
     font-size: 20px;
-    border: none;
     border-radius: 50%;
     color: v.$text-color;
     background-color: v.$red-color;
     overflow: hidden;
     border: 1px solid v.$text-color;
-    transition: 
+    transition:
         width 1.5s,
         border-radius 1.5s ease;
-    // text-wrap: nowarp;
 
     i {
         margin: 3px;
@@ -68,10 +64,7 @@
     height: 100%;
     width: 100%;
     backdrop-filter: blur(5px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    // transition: backdrop-filter 1s ease;
+    @include m.flex-center;
 
     &__card {
         position: absolute;
@@ -98,16 +91,14 @@
         &-total {
             height: 100px;
             width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            @include m.flex-center;
 
             .total {
                 color: v.$text-color;
                 margin: 15px;
             }
 
-            input {
+            .input-total {
                 outline: none;
                 border: none;
                 color: v.$text-color;
@@ -124,7 +115,7 @@
             display: flex;
             border-top: 3px solid v.$secondary-color;
 
-            button {
+            .btn-modal {
                 flex-grow: 1;
                 background-color: v.$primary-color;
                 color: v.$text-color;
@@ -142,13 +133,8 @@
             }
         }
 
-        // Acomodar correctamente como se debe ver el modal en mobil
-        // ademas de modificar el height
-        
         &-radio {
-            // width: 100%;
             display: flex;
-            // align-items: center;
             flex-direction: column;
             margin-top: 0px !important;
             margin-bottom: 0px !important;
@@ -156,49 +142,43 @@
             justify-content: space-evenly;
             margin-bottom: 20px;
 
-            input {
+            .radio-input {
                 margin-right: 5px;
-                
+
                 &:checked {
                     color: v.$red-color;
                 }
             }
         }
     }
+}
 
-    &__end-day {
-        border: 2px solid v.$red-color;
+.modal__end-day {
+    border: 2px solid v.$red-color;
 
-        .modal {
-            &__card-total {
-                p {
-                    margin: 20px;
-                    font-size: 20px;
-                    text-align: center;
-                }
-            }
+    .modal__card-total {
+        p {
+            margin: 20px;
+            font-size: 20px;
+            text-align: center;
+        }
 
-            &__card-btns {
-                button {
-                    &:last-child {
-                        border-bottom-right-radius: 20px;
-                        border: 3px solid v.$red-color;
-                        background-color: v.$red-color;
-                        transition: background-color .5s ease;
+    }
 
-                        &:hover {
-                            background-color: v.$primary-color;
-                        }
-                    }
-                }
+    .btn-modal {
+        &:last-child {
+            border-bottom-right-radius: 20px;
+            border: 3px solid v.$red-color;
+            background-color: v.$red-color;
+            transition: background-color .5s ease;
+
+            &:hover {
+                background-color: v.$primary-color;
             }
         }
     }
-}
 
-// .modal-hidden {
-//     visibility: hidden;
-// }
+}
 
 @media (min-width: 700px) {
     .modal__card {
@@ -213,8 +193,8 @@
     .fixed-btns {
         margin: 10px;
         padding: 10px;
-        // bottom: 10vh;
     }
+
     .sales-btn {
         height: 80px;
         width: 80px;

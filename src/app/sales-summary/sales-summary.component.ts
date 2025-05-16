@@ -1,8 +1,8 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { DatabaseService } from '../data-access/database.service';
 import { SalesSummary } from '../interfaces/database.interface';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { combineLatest, filter } from 'rxjs';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { combineLatest } from 'rxjs';
 
 const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
 

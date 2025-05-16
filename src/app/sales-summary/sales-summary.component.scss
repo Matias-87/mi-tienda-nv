@@ -1,4 +1,5 @@
 @use '../../partials/variables' as v;
+@use '../../partials/mixins' as m;
 
 .principal-container {
     height: 100vh;
@@ -6,7 +7,6 @@
     display: flex;
     align-items: center;
     flex-direction: column;
-    // overflow-y: scroll;
     overflow-x: hidden;
     padding-bottom: 95px;
 }
@@ -67,29 +67,6 @@
         font-size: 20px;
         padding: 10px;
         border-top: 2px solid v.$secondary-color;
-
-        button {
-            height: 50px;
-            width: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0px;
-            text-align: center;
-            background-color: v.$red-color;
-            border: 2px solid v.$red-color;
-            transition: background-color .5s ease;
-
-            &:hover {
-                background-color: v.$primary-color;
-
-            }
-
-            i {
-                font-size: 2rem;
-                color: v.$text-color;
-            }
-        }
     }
 
     &__price {

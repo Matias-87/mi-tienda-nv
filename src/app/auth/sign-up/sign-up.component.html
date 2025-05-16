@@ -1,0 +1,51 @@
+<div class="principal-container">
+    <div class="form-container">
+        <h3 class="mb-3">Sign Up</h3>
+        <form [formGroup]="form" (ngSubmit)="signUp()">
+            <div class="form-floating mb-3" [ngClass]="{'field-invalid': storeName.invalid && storeName.touched}">
+                <input type="text" class="form-control" id="storeName" formControlName="storeName"
+                    placeholder="Mi Tienda">
+                <label for="">Nombre de MiTienda</label>
+                @if (storeName.invalid && (storeName.dirty || storeName.touched)) {
+                <div class="alert">
+                    <i class="bi bi-exclamation-circle-fill me-2"></i>
+                    @if (storeName.hasError('required')) {Ingrese el nombre de su Tienda.}
+                </div>
+                }
+            </div>
+            <div class="form-floating mb-3" [ngClass]="{'field-invalid': email.invalid && email.touched}">
+                <input type="email" class="form-control" id="email" formControlName="email"
+                    placeholder="name@example.com" (input)="errorMessage != null ? errorMessage = null : errorMessage ">
+                <label for="email">Correo electronico</label>
+                @if (email.invalid && (email.dirty || email.touched) || errorMessage) {
+                <div class="alert">
+                    <i class="bi bi-exclamation-circle-fill me-2"></i>
+                    @if (email.hasError('required')) {Ingrese un email.}
+                    @if (email.hasError('email')) {Por favor ingrese un email valido.}
+                    @if (errorMessage) { {{errorMessage}} }
+                </div>
+                }
+            </div>
+            <div class="form-floating" [ngClass]="{'field-invalid': password.invalid && password.touched}">
+                <input [type]="hide ? 'password' : 'text'" class="form-control" id="password" formControlName="password"
+                    placeholder="password">
+                <label for="password">Contraseña</label>
+                <button (click)="hide = !hide" class="form-floating__hide-button">
+                    <i [class]="hide ? 'bi bi-eye-fill' : 'bi bi-eye-slash-fill'"></i>
+                </button>
+            </div>
+            @if (password.invalid && (password.dirty || password.touched)) {
+            <div class="alert">
+                <i class="bi bi-exclamation-circle-fill me-2"></i>
+                @if (password.hasError('required')) {Ingrese una contraseña.}
+                @if (password.hasError('minlength')) {La contraseña debe tener minimo 6 caracteres.}
+            </div>
+            }
+            <p class="redirect">
+                Ya tenes una cuenta ?
+                <a href="/auth/log-in">Inicia Sesión.</a>
+            </p>
+            <button type="submit" [disabled]="!form.valid" class="btn submitButton mt-3">Registrarte</button>
+        </form>
+    </div>
+</div>
